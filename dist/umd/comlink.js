@@ -213,6 +213,7 @@ else {factory([], self.Comlink={});}
             "removeEventListener" in endpoint &&
             "postMessage" in endpoint);
     }
+    exports.isEndpoint = isEndpoint;
     function activateEndpoint(endpoint) {
         if (isMessagePort(endpoint))
             endpoint.start();
@@ -234,7 +235,8 @@ else {factory([], self.Comlink={});}
         endpoint.removeEventListener("message", f);
     }
     function isMessagePort(endpoint) {
-        return endpoint.constructor.name === "MessagePort";
+        return (typeof endpoint.start === "function" &&
+            typeof endpoint.close === "function");
     }
     function isWindow(endpoint) {
         // TODO: This doesn’t work on cross-origin iframes.
