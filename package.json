@@ -1,5 +1,5 @@
 {
-  "name": "comlink",
+  "name": "@sourcegraph/comlink",
   "version": "4.2.0",
   "description": "Comlink makes WebWorkers enjoyable",
   "main": "dist/umd/comlink.js",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoogleChromeLabs/comlink.git"
+    "url": "https://github.com/sourcegraph/comlink.git"
   },
   "license": "Apache-2.0",
   "devDependencies": {
