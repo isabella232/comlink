@@ -32,6 +32,7 @@
   "devDependencies": {
     "chai": "4.2.0",
     "conditional-type-checks": "1.0.5",
+    "express": "^4.17.1",
     "husky": "3.1.0",
     "karma": "4.4.1",
     "karma-chai": "0.1.0",
@@ -47,7 +48,9 @@
     "rollup": "1.27.8",
     "rollup-plugin-terser": "5.1.2",
     "rollup-plugin-typescript2": "0.25.3",
-    "typescript": "3.9.0-beta"
+    "typescript": "3.9.0-beta",
+    "web-streams-polyfill": "^2.0.6",
+    "ws": "^7.2.1"
   },
   "dependencies": {}
 }
