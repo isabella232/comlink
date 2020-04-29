@@ -76,7 +76,7 @@ function padLeft(str: string, pad: string, length: number): string {
 
 function hexEncode(buffer: ArrayBuffer): string {
   return [...new Uint8Array(buffer)]
-    .map(v => padLeft(v.toString(16), "0", 2))
+    .map((v) => padLeft(v.toString(16), "0", 2))
     .join("");
 }
 
@@ -85,7 +85,7 @@ function hexDecode(s: string): ArrayBuffer {
     s
       .split(/(..)/)
       .filter(Boolean)
-      .map(v => parseInt(v, 16))
+      .map((v) => parseInt(v, 16))
   ).buffer;
 }
 
@@ -103,7 +103,7 @@ function addMessageListener(
 
 const enum SerializedTransferableType {
   MessagePort,
-  TypedArray
+  TypedArray,
 }
 
 const enum TypedArrayType {
@@ -118,7 +118,7 @@ const enum TypedArrayType {
   Float32,
   Float64,
   BigInt64,
-  BigUint64
+  BigUint64,
 }
 
 interface SerializedTransferableTypedArray {
@@ -173,29 +173,29 @@ function getTypedViewConstructor(
 ): (v: ArrayBuffer) => ArrayBufferView | ArrayBuffer {
   switch (type) {
     case TypedArrayType.Raw:
-      return v => v;
+      return (v) => v;
     case TypedArrayType.Int8:
-      return v => new Int8Array(v);
+      return (v) => new Int8Array(v);
     case TypedArrayType.Uint8:
-      return v => new Uint8Array(v);
+      return (v) => new Uint8Array(v);
     case TypedArrayType.Uint8Clamped:
-      return v => new Uint8ClampedArray(v);
+      return (v) => new Uint8ClampedArray(v);
     case TypedArrayType.Int16:
-      return v => new Int16Array(v);
+      return (v) => new Int16Array(v);
     case TypedArrayType.Uint16:
-      return v => new Uint16Array(v);
+      return (v) => new Uint16Array(v);
     case TypedArrayType.Int32:
-      return v => new Int32Array(v);
+      return (v) => new Int32Array(v);
     case TypedArrayType.Uint32:
-      return v => new Uint32Array(v);
+      return (v) => new Uint32Array(v);
     case TypedArrayType.Float32:
-      return v => new Float32Array(v);
+      return (v) => new Float32Array(v);
     case TypedArrayType.Float64:
-      return v => new Float64Array(v);
+      return (v) => new Float64Array(v);
     case TypedArrayType.BigInt64:
-      return v => new BigInt64Array(v);
+      return (v) => new BigInt64Array(v);
     case TypedArrayType.BigUint64:
-      return v => new BigUint64Array(v);
+      return (v) => new BigUint64Array(v);
   }
 }
 
@@ -220,21 +220,21 @@ function makeTransferable(
     addMessageListener(v, ({ data }) => {
       wrapped.postMessage(
         data,
-        findAllTransferables(data).map(v => v.value)
+        findAllTransferables(data).map((v) => v.value)
       );
     });
     v.start();
     addMessageListener(wrapped, ({ data }) => {
       v.postMessage(
         data,
-        findAllTransferables(data).map(v => v.value)
+        findAllTransferables(data).map((v) => v.value)
       );
     });
 
     return {
       type: SerializedTransferableType.MessagePort,
       path: [],
-      value: uid
+      value: uid,
     };
   } else if (v instanceof ArrayBuffer || ArrayBuffer.isView(v)) {
     const buffer = (v as any).buffer || v;
@@ -242,7 +242,7 @@ function makeTransferable(
       type: SerializedTransferableType.TypedArray,
       subtype: getTypedArrayType(v),
       path: [],
-      value: hexEncode(buffer)
+      value: hexEncode(buffer),
     };
   }
   throw Error("Not transferable");
@@ -287,14 +287,14 @@ interface StringChannelPayload {
 export function wrap(ep: StringChannelEndpoint, uid = "") {
   const { port1, port2 } = new MessageChannel();
 
-  ep.addMessageListener(msg => {
+  ep.addMessageListener((msg) => {
     let payload: StringChannelPayload;
     payload = JSON.parse(msg);
     if (payload.uid !== uid) {
       return;
     }
     const transferables: Transferable[] = payload.transfer
-      .map(transfer => {
+      .map((transfer) => {
         const [replacement, transferable] = deserializeTransferable(
           transfer,
           ep

@@ -14,8 +14,8 @@
 import "/base/node_modules/web-streams-polyfill/dist/polyfill.es2018.js";
 import { wrap } from "/base/dist/esm/string-channel.experimental.mjs";
 
-describe("StringChannel", function() {
-  beforeEach(function() {
+describe("StringChannel", function () {
+  beforeEach(function () {
     let { readable: r1, writable: w1 } = new TransformStream();
     let { readable: r2, writable: w2 } = new TransformStream();
 
@@ -36,7 +36,7 @@ describe("StringChannel", function() {
         const w = w1.getWriter();
         w.write(msg);
         w.releaseLock();
-      }
+      },
     });
     this.ep2 = wrap({
       async addMessageListener(f) {
@@ -55,11 +55,11 @@ describe("StringChannel", function() {
         const w = w2.getWriter();
         w.write(msg);
         w.releaseLock();
-      }
+      },
     });
   });
 
-  it("can communicate by just using strings", function(done) {
+  it("can communicate by just using strings", function (done) {
     const originalMessage = { a: 1, b: "hello" };
     this.ep2.addEventListener("message", ({ data }) => {
       expect(JSON.stringify(data)).to.equal(JSON.stringify(originalMessage));
@@ -71,7 +71,7 @@ describe("StringChannel", function() {
     this.ep1.postMessage(originalMessage);
   });
 
-  it("can transfer MessagePorts", function(done) {
+  it("can transfer MessagePorts", function (done) {
     const originalMessage = { a: 1, b: "hello" };
     const mc = new MessageChannel();
     this.ep2.addEventListener("message", ({ data }) => {
@@ -86,7 +86,7 @@ describe("StringChannel", function() {
     mc.port1.postMessage(originalMessage);
   });
 
-  it("can transfer ArrayBuffers", function(done) {
+  it("can transfer ArrayBuffers", function (done) {
     const originalMessage = { a: 1, b: new Uint8Array([1, 2, 3]).buffer };
     this.ep2.addEventListener("message", ({ data }) => {
       expect([...new Uint8Array(data.b)]).to.deep.equal([1, 2, 3]);
@@ -96,7 +96,7 @@ describe("StringChannel", function() {
     this.ep1.postMessage(originalMessage);
   });
 
-  it("can transfer TypedArrays", function(done) {
+  it("can transfer TypedArrays", function (done) {
     const originalMessage = { a: 1, b: new Uint8Array([1, 2, 3]) };
     this.ep2.addEventListener("message", ({ data }) => {
       expect([...data.b]).to.deep.equal([1, 2, 3]);

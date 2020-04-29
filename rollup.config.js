@@ -49,13 +49,13 @@ export default [
     input: "string-channel.experimental",
     format: "esm",
     minify: false,
-    ext: "mjs"
+    ext: "mjs",
   },
   {
     input: "string-channel.experimental",
     format: "esm",
     minify: true,
-    ext: "mjs"
+    ext: "mjs",
   },
   { input: "string-channel.experimental", format: "esm", minify: false },
   { input: "string-channel.experimental", format: "esm", minify: true },

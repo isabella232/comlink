@@ -21,12 +21,12 @@ const api = {
   increase(delta = 1) {
     this.counter += delta;
     console.log(`Counter set to ${this.counter}`);
-  }
+  },
 };
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: "/ws" });
-wss.on("connection", ws => {
+wss.on("connection", (ws) => {
   Comlink.expose(api, websocketEndpoint(ws));
 });
 
@@ -39,11 +39,11 @@ function websocketEndpoint(ws) {
   return nodeEndpoint(
     wrap({
       addMessageListener(f) {
-        ws.addEventListener("message", ev => f(ev.data));
+        ws.addEventListener("message", (ev) => f(ev.data));
       },
       send(msg) {
         ws.send(msg);
-      }
+      },
     })
   );
 }

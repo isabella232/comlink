@@ -26,7 +26,7 @@ module.exports = function (config) {
       },
       {
         pattern: "node_modules/**/*.@(mjs|js)",
-        included: false
+        included: false,
       },
       {
         pattern: "tests/*.test.js",

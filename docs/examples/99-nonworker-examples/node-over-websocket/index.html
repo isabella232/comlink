@@ -20,7 +20,7 @@
   run();
 
   function websocketReady(ws) {
-    return new Promise(resolve =>
+    return new Promise((resolve) =>
       ws.addEventListener("open", resolve, { once: true })
     );
   }
@@ -28,11 +28,11 @@
   function websocketEndpoint(ws) {
     return wrap({
       addMessageListener(f) {
-        ws.addEventListener("message", ev => f(ev.data));
+        ws.addEventListener("message", (ev) => f(ev.data));
       },
       send(msg) {
         ws.send(msg);
-      }
+      },
     });
   }
 </script>
