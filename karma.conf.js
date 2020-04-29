@@ -11,18 +11,18 @@
  * limitations under the License.
  */
 
-module.exports = function(config) {
+module.exports = function (config) {
   const configuration = {
     basePath: "",
     frameworks: ["mocha", "chai", "detectBrowsers"],
     files: [
       {
         pattern: "tests/fixtures/*",
-        included: false
+        included: false,
       },
       {
         pattern: "dist/**/*.@(mjs|js)",
-        included: false
+        included: false,
       },
       {
         pattern: "node_modules/**/*.@(mjs|js)",
@@ -30,8 +30,8 @@ module.exports = function(config) {
       },
       {
         pattern: "tests/*.test.js",
-        type: "module"
-      }
+        type: "module",
+      },
     ],
     reporters: ["progress"],
     port: 9876,
@@ -44,7 +44,7 @@ module.exports = function(config) {
       enabled: true,
       usePhantomJS: false,
       preferHeadless: true,
-      postDetection: availableBrowsers => {
+      postDetection: (availableBrowsers) => {
         if (process.env.INSIDE_DOCKER) {
           return ["DockerChrome"];
         } else if (process.env.CHROME_ONLY) {
@@ -55,17 +55,17 @@ module.exports = function(config) {
           // I know that’s not a good reason to disable tests,
           // but Safari TP is relatively unimportant.
           return availableBrowsers.filter(
-            browser => browser !== "SafariTechPreview"
+            (browser) => browser !== "SafariTechPreview"
           );
         }
-      }
+      },
     },
     customLaunchers: {
       DockerChrome: {
         base: "ChromeHeadless",
-        flags: ["--no-sandbox"]
-      }
-    }
+        flags: ["--no-sandbox"],
+      },
+    },
   };
 
   config.set(configuration);

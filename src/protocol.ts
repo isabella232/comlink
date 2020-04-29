@@ -41,7 +41,7 @@ export const enum WireValueType {
   RAW,
   PROXY,
   THROW,
-  HANDLER
+  HANDLER,
 }
 
 export interface RawWireValue {
@@ -54,7 +54,7 @@ export interface HandlerWireValue {
   id?: string;
   type: WireValueType.HANDLER;
   name: string;
-  value: {};
+  value: unknown;
 }
 
 export type WireValue = RawWireValue | HandlerWireValue;
@@ -67,7 +67,7 @@ export const enum MessageType {
   APPLY,
   CONSTRUCT,
   ENDPOINT,
-  RELEASE
+  RELEASE,
 }
 
 export interface GetMessage {
